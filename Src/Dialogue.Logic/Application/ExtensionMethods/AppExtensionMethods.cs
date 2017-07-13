@@ -47,9 +47,9 @@ namespace Dialogue.Logic.Application.ExtensionMethods
 
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
             var containerdiv = new TagBuilder("div");
-            containerdiv.AddCssClass("paginationholder");
+            containerdiv.AddCssClass("enei-pagination");
             var container = new TagBuilder("ul");
-            container.AddCssClass("pagination");
+            //container.AddCssClass("pagination");
 
             // calculate the last page group number starting from the current page  	
             // until we hit the next whole divisible number  	

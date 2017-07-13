@@ -34,7 +34,7 @@
         public const string PostOrderBy = "order";
         public const string AllPosts = "all";
 
-        public const string EditorType = "forumeditor";
+        public const string EditorType = "markdowneditor"; //forumeditor
 
         //Uploads
         public const string UploadFolderPath = "~/media/MemberUploads/";
@@ -106,5 +106,11 @@
         // Main guest role [This should never be changed]
         // This is the role a non logged in user defaults to
         public const string GuestRoleName = "Dialogue Guest";
+
+        //These were missing
+        public const int GravatarPostSize = 50;
+        public const int GravatarProfileSize = 150;
+        public const int GravatarLeaderboardSize = 50;
+        public const int PrivateMessageListSize = 5;
     }
 }

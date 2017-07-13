@@ -63,7 +63,7 @@ namespace Dialogue.Logic.Application
 
         public static string GetGravatarImage(string email, int size)
         {
-            return IsValidEmail(email) ? string.Format("http://www.gravatar.com/avatar/{0}?s={1}&d=identicon", md5HashString(email), size) : "";
+            return IsValidEmail(email) ? string.Format("http://www.gravatar.com/avatar/{0}?s={1}&d=identicon", md5HashString(email), size) : "";            
         }
 
         #endregion

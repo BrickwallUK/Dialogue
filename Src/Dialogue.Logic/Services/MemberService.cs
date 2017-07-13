@@ -205,7 +205,7 @@
             MemberPointsService memberPointsService, PollService pollService, TopicService topicService, TopicNotificationService topicNotificationService,
             ActivityService activityService, PrivateMessageService privateMessageService, BadgeService badgeService, VoteService voteService, CategoryNotificationService categoryNotificationService)
         {
-            if (DeleteAllAssociatedMemberInfo(member.Id, unitOfWork, uploadedFileService, postService, memberPointsService, pollService, 
+            if (DeleteAllAssociatedMemberInfo(member.Id, unitOfWork, uploadedFileService, postService, memberPointsService, pollService,
                 topicService, topicNotificationService, activityService, privateMessageService, badgeService, voteService, categoryNotificationService))
             {
                 var baseMember = _memberService.GetById(member.Id);
@@ -235,7 +235,7 @@
         /// <param name="voteService"></param>
         /// <param name="categoryNotificationService"></param>
         /// <returns></returns>
-        public bool DeleteAllAssociatedMemberInfo(int userId, UnitOfWork unitOfWork, UploadedFileService uploadedFileService, PostService postService, 
+        public bool DeleteAllAssociatedMemberInfo(int userId, UnitOfWork unitOfWork, UploadedFileService uploadedFileService, PostService postService,
             MemberPointsService memberPointsService, PollService pollService, TopicService topicService, TopicNotificationService topicNotificationService,
             ActivityService activityService, PrivateMessageService privateMessageService, BadgeService badgeService, VoteService voteService, CategoryNotificationService categoryNotificationService)
         {
@@ -382,9 +382,12 @@
                     ContextPerRequest.Db.Topic.Remove(topic);
                 }
 
-                // Sync the members post count. For all members who had a post deleted.
-                var members = GetAllById(memberIds);
-                SyncMembersPostCount(members);
+                if (memberIds != null && memberIds.Any())
+                {
+                    // Sync the members post count. For all members who had a post deleted.
+                    var members = GetAllById(memberIds);
+                    SyncMembersPostCount(members);
+                }
 
                 // Now clear all activities for this user
                 var usersActivities = activityService.GetDataByUserId(userId);
@@ -505,7 +508,7 @@
             if (member.PostCount > 0)
             {
                 baseMember.Properties[AppConstants.PropMemberPostCount].Value = (member.PostCount - amount);
-                _memberService.Save(baseMember);   
+                _memberService.Save(baseMember);
             }
         }
 
@@ -525,7 +528,7 @@
         public void SaveMember(Member member, bool changedUsername)
         {
             var baseMember = _memberService.GetById(member.Id);
-            
+
             // Only change username if it's different
             if (changedUsername)
             {
@@ -533,7 +536,7 @@
                 baseMember.Name = member.UserName;
             }
 
-            baseMember.Email = member.Email;       
+            baseMember.Email = member.Email;
             baseMember.Properties[AppConstants.PropMemberSignature].Value = member.Signature;
             baseMember.Properties[AppConstants.PropMemberWebsite].Value = member.Website;
             baseMember.Properties[AppConstants.PropMemberTwitter].Value = member.Twitter;

@@ -220,14 +220,14 @@
                     catch (Exception ex)
                     {
                         unitOfWork.Rollback();
-                        LogError("Eror during member registering", ex);
+                        AppHelpers.LogError("Eror during member registering", ex);
                         FormsAuthentication.SignOut();
                         ModelState.AddModelError(string.Empty, ex.Message);
                     }
                 }
                 if (userModel.LoginType != LoginType.Standard)
                 {
-                    ShowMessage();
+                    
                     return Redirect(Settings.RegisterUrl);
                 }
                 return CurrentUmbracoPage();

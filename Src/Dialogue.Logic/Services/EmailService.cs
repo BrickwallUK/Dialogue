@@ -43,7 +43,7 @@
                     {
                         EmailFrom = settings.NotificationReplyEmailAddress,
                         EmailTo = userToSave.Email,
-                        NameTo = userToSave.Username,
+                        NameTo = userToSave.Name,
                         Subject = AppHelpers.Lang("Members.MemberEmailAuthorisation.Subject")
                     };
 
@@ -55,7 +55,7 @@
                     // This cookie is removed when they click the confirmation link and they are logged in
                     var myCookie = new HttpCookie(AppConstants.MemberEmailConfirmationCookieName)
                     {
-                        Value = $"{userToSave.Id}#{userToSave.Username}",
+                        Value = $"{userToSave.Id}#{userToSave.Name}",
                         Expires = DateTime.Now.AddDays(7)
                     };
                     // Add the cookie.

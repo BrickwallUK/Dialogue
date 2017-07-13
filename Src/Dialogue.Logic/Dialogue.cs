@@ -6,6 +6,7 @@ using Dialogue.Logic.Constants;
 using Dialogue.Logic.Models;
 using Umbraco.Core.Models;
 using Umbraco.Web;
+using System;
 
 namespace Dialogue.Logic
 {
@@ -142,7 +143,7 @@ namespace Dialogue.Logic
 
         public static DialogueSettings Settings()
         {
-            if (!HttpContext.Current.Items.Contains(AppConstants.SiteSettingsKey))
+            if (!HttpContext.Current.Items.Contains(AppConstants.SiteSettingsKey) || HttpContext.Current.Items[AppConstants.SiteSettingsKey] == null)
             {
                 var currentPage = AppHelpers.CurrentPage();
                 if (currentPage != null)
@@ -152,8 +153,24 @@ namespace Dialogue.Logic
                     {
                         // Only do this is if we can't find the forum normally
                         forumNode = currentPage.DescendantOrSelf(DialogueConfiguration.Instance.DocTypeForumRoot);
+
+                        if (forumNode == null)
+                        {
+                            try
+                            {
+                                forumNode = AppHelpers.UmbHelper().TypedContentAtRoot().FirstOrDefault().Descendant(DialogueConfiguration.Instance.DocTypeForumRoot);
+                            }
+                            catch (Exception e)
+                            {
+                                return null;
+                            }
+                        }
                     }
-                    HttpContext.Current.Items.Add(AppConstants.SiteSettingsKey, Settings(forumNode));
+
+                    if (HttpContext.Current.Items[AppConstants.SiteSettingsKey] == null)
+                        HttpContext.Current.Items[AppConstants.SiteSettingsKey] = Settings(forumNode);
+                    else
+                        HttpContext.Current.Items.Add(AppConstants.SiteSettingsKey, Settings(forumNode));
                 }
                 else
                 {
