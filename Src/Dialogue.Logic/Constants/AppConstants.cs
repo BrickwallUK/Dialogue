@@ -108,6 +108,7 @@
         public const string GuestRoleName = "Dialogue Guest";
 
         //These were missing
+        public const int GravatarTopicSize = 35;
         public const int GravatarPostSize = 50;
         public const int GravatarProfileSize = 150;
         public const int GravatarLeaderboardSize = 50;
